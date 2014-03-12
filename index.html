@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <meta name="viewport" content="width=620" />
+      <link rel="stylesheet" href="css/html5demos.css">
+    <style>
+      #map_canvas {
+        width: 500px;
+        height: 400px;
+      }
+    </style>
+    <script src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <script>
+        function showPosition(position) {
+            var map_canvas = document.getElementById('map_canvas');
+            var myLatlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+            var map_options = {
+                center: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
+                zoom: 15,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            }
+            var map = new google.maps.Map(map_canvas, map_options)
+            var marker = new google.maps.Marker({
+                position: myLatlng,
+                map: map,
+                title: 'Current Location!'
+            });
+        }
+        function errorHandler(result) {
+            alert(result.toString());
+        }
+        function initialize() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition, errorHandler);
+            }
+            else {
+                alert("Sorry, your browser does not support geolocation services.");
+            }
+        }
+      google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+  </head>
+  <body>
+      <section id="wrapper">
+          <header>
+              <h1>geolocation</h1>
+          </header>
+    <div id="map_canvas"></div>
+          <footer><div>Get Your Geo position</div>
+</footer> 
+          </section>
+  </body>
+</html>
